@@ -28,13 +28,26 @@ import numpy as np
 # from requests import request
 
 def login(request):
-    # views.py or other files in your current app
-    print("dsfs")
+    if request.method == "POST":
+        username  = request.POST.get('use')
+        password = request.POST.get('pass')
+        print(username)
+        user = authenticate(username=username, password=password)
+        if user.is_superuser:
+            request.session['userid'] = request.user.id
+            return redirect('dashboard')
+        else:
+            pass
     return render(request, 'home/login.html')
 
 def dashboard(request):
     return render(request,'home/index.html')
+
 def registration(request):
-    return render(request,'home/register.html')
+    return render(request,'accounts/register.html')
+    
 def users(request):
     return render(request,"home/user_list.html")
+
+def icons(request):
+    return render(request,"home/icons.html")

@@ -6,14 +6,21 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
+{%load static%}
+    <form action="" method="POST">
+        {%csrf_token %}
     <div class="content">
         <div class="container">
             <div class="row pt-5">
-                <div class="col-md-6 mt-5 offset-md-3 pt-5 mt-5">
+                <div class="col-md-6 mt-5 offset-md-3 ">
                     <div class="card">
+                        <div class="row mt-4">
+                            <div class="col-sm-12" style="text-align: center;">
+                              <a href=""><img src="{% static 'login_texe.png'%}" class="w-50" alt="Texe Logo"></a>
+                            </div>
+                          </div>
                         <div class="card-header text-center py-4">
-                            <h4 class="title">Login to CT ADMIN</h4>
+                            <h4 class="title">Login</h4>
                         </div>
                         <div class="card-body px-5 py-3">
                             <form>
@@ -22,15 +29,14 @@
                                         <div class="form-group">
                                             <label>Username</label>
                                             <input type="text" class="form-control" placeholder="Username"
-                                                    value="michael23">
+                                                    name="use">
                                         </div>
                                     </div>
 
                                     <div class="col-md-12 px-md-1">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" class="form-control" placeholder="password"
-                                                    value="example@gmail.com">
+                                            <input type="password" class="form-control" placeholder="password" name="pass">
                                         </div>
                                     </div>
                                 </div>
@@ -42,9 +48,7 @@
                             
                             <br /><br />
 
-                            <p>
-                                Don't have an account? <a href="/register.html" class="text-primary">Register</a>                            
-                            </p>
+                            
                         </div>
                     </div>
                 </div>
@@ -53,6 +57,7 @@
         </div>
 
     </div>
+    </form>
 
 {% endblock content %}
 

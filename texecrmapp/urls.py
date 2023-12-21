@@ -7,4 +7,7 @@ urlpatterns = [
     path('users',views.users, name='users'),
 
     path('registration',views.registration, name='registration'),
+
+
+    path('icons',views.icons, name='icons'),
 ]

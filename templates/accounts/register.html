@@ -21,9 +21,7 @@
                                 {% if msg %}
                                     <span class="text-danger">{{ msg | safe }}</span>
                                 {% else %}
-                                    <span>
-                                        Add your credentials
-                                    </span>
+                                   
                                 {% endif %}  
                             </h6>     
 
@@ -47,35 +45,79 @@
                                     <div class="row">
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Username</label>
-                                                {{ form.username }}
+                                                <label style="font-size: 16px;">Name</label>
+                                                <input type="text" placeholder="" class="form-control" name="name">
+                                            </div>
+                                            <span class="text-danger">{{ form.password2.errors }}</span>
+                                        </div>
+                                        
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label style="font-size: 16px;">Address</label>
+                                                <input type="text" placeholder="" class="form-control" name="address">
+                                            </div>
+                                            <span class="text-danger">{{ form.password2.errors }}</span>
+                                        </div>  
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label style="font-size: 16px;">Phone Number</label>
+                                                <input type="text" placeholder="" class="form-control" name="phn_no">
+                                            </div>
+                                            <span class="text-danger">{{ form.password2.errors }}</span>
+                                        </div>  
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label style="font-size: 16px;">Profile Image</label><br>
+                                                <div class="btn btn-fill btn-primary" >
+                                                    <i class="tim-icons icon-cloud-upload-94" style="font-size: 40px;"></i>  
+                                                </div>
+                                                
+                                                <input type="file" placeholder="" class="form-control" name="propic">
+                                            </div>
+                                            <span class="text-danger">{{ form.password2.errors }}</span>
+                                        </div>
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label style="font-size: 16px;">Username</label>
+                                                <input type="text" placeholder="" class="form-control" name="username">
                                             </div>
                                             <span class="text-danger">{{ form.username.errors }}</span>
                                         </div>
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                {{ form.email }}
+                                                <label style="font-size: 16px;">Email</label>
+                                                <input type="email" placeholder="" class="form-control" name="email">
                                             </div>
                                             <span class="text-danger">{{ form.email.errors }}</span>
                                         </div>
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Password</label>
-                                                {{ form.password1 }}
+                                                <label style="font-size: 16px;">Password</label>
+                                                <input type="password" placeholder="" class="form-control" name="password">
                                             </div>
                                             <span class="text-danger">{{ form.password1.errors }}</span>
                                         </div>
 
                                         <div class="col-md-12 px-md-1">
                                             <div class="form-group">
-                                                <label>Password Check</label>
-                                                {{ form.password2 }}
+                                                <label style="font-size: 16px;">Password Check</label>
+                                                <input type="password" placeholder="" class="form-control" name="password_chk">
                                             </div>
                                             <span class="text-danger">{{ form.password2.errors }}</span>
-                                        </div>                                        
+                                        </div>  
+
+                                        <div class="col-md-12 px-md-1">
+                                            <div class="form-group">
+                                                <label style="font-size: 16px;">Location</label>
+                                                <input type="text" placeholder="" class="form-control" name="location">
+                                            </div>
+                                            <span class="text-danger">{{ form.password2.errors }}</span>
+                                        </div>      
+                                        
+                                            
 
                                     </div>
 
@@ -86,9 +128,7 @@
 
                                     <br /><br />
                                     
-                                    <p>
-                                        Have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
-                                    </p> 
+                                    
                                 </div>
                             
                             </form>
