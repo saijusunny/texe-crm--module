@@ -1,0 +1,157 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Service % Complaints {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header ">
+                        <div class="row">
+                            <div class="col-sm-12   text-left">
+                                <h5 class="card-category"></h5>
+                                <h2 class="card-title">Service & Complaints</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+
+                                
+                                
+                                <div class="float-left btn-group btn-group-toggle mr-4"  >
+                                    <a  style="text-decoration: none;" onclick="show_compl()" >
+                                    <div class="btn btn-sm btn-primary btn-simple"  >
+                                      
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Complaint</span>
+                                        <span class="d-block d-sm-none">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </span>
+                                    </div>
+
+                                    </a>
+                                    <a  style="text-decoration: none;" onclick="show_service()">
+
+                                    <div class="btn btn-sm btn-primary btn-simple" id="1">
+                                        <input type="radio" class="d-none d-sm-none" name="options">
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Service</span>
+                                        <span class="d-block d-sm-none">
+                                            <i class="tim-icons icon-gift-2"></i>
+                                        </span>
+                                    </div>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                            <div class="col-6">
+
+                                
+                                
+                                <div class="float-right btn-group btn-group-toggle mr-4"  >
+                                    <a  style="text-decoration: none;" href="{% url 'add_complaint'%}">
+                                    <div class="btn btn-sm btn-primary btn-simple"  >
+                                      
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Add Complaintes</span>
+                                        <span class="d-block d-sm-none">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </span>
+                                    </div>
+
+                                    </a>
+                                    <a  style="text-decoration: none;"  href="{% url 'add_service'%}">
+
+                                    <div class="btn btn-sm btn-primary btn-simple" id="1">
+                                        <input type="radio" class="d-none d-sm-none" name="options">
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Add Service</span>
+                                        <span class="d-block d-sm-none">
+                                            <i class="tim-icons icon-gift-2"></i>
+                                        </span>
+                                    </div>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table bg-fill bg-primary" style="border-radius: 5px;"  id="complaint">
+                            <thead>
+                                <th style="font-size: 18px;">Reg. No.</th>
+                                <th style="font-size: 18px;">Reg. Date</th>
+                                <th style="font-size: 18px;">Name</th>
+                                <th style="font-size: 18px;">Ph No</th>
+                                <th style="font-size: 18px;">Status</th>
+                            </thead>
+                            <tbody>
+                            {% for k in comp%}
+                              <tr class="table-active">
+                                <td style="font-size: 16px;">{{k.regno}}</td>
+                                <td style="font-size: 16px;">{{k.date_register}}</td>
+                                <td style="font-size: 16px;">{{k.users.name}}</td>
+                                <td style="font-size: 16px;">{{k.users.number}}</td>
+                                <td style="font-size: 16px;">{{k.status}}</td>
+                                
+                              </tr>
+                              {%endfor%}
+                              
+                              
+                            </tbody>
+                          </table>
+
+                          <table class="table bg-fill bg-primary" style="border-radius: 5px;display: none;"  id="service">
+                            <thead>
+                                <th style="font-size: 18px;">Reg. No.</th>
+                                <th style="font-size: 18px;">Reg. Date</th>
+                                <th style="font-size: 18px;">Name</th>
+                                <th style="font-size: 18px;">Ph No</th>
+                                <th style="font-size: 18px;">Status</th>
+                            </thead>
+                            <tbody>
+                            
+
+                              
+
+                              {% for k in serv%}
+                              <tr class="table-active">
+                                <td style="font-size: 16px;">{{k.regno}}</td>
+                                <td style="font-size: 16px;">{{k.date_register}}</td>
+                                <td style="font-size: 16px;">{{k.users.name}}</td>
+                                <td style="font-size: 16px;">{{k.users.number}}</td>
+                                <td style="font-size: 16px;">{{k.status}}</td>
+                                
+                              </tr>
+                              {%endfor%}
+                              
+                              
+                            </tbody>
+                          </table>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    function show_compl(){
+        document.getElementById('complaint').style.display = 'table';
+        document.getElementById('service').style.display = 'none';
+    }
+    function show_service(){
+        document.getElementById('complaint').style.display = 'none';
+        document.getElementById('service').style.display = 'table';
+    }
+</script>
+{% endblock javascripts %}

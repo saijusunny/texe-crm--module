@@ -26,3 +26,12 @@ class users(models.Model):
     otp= models.CharField(max_length=250, null=True, blank=True)
     def get_email_field_name(self):
         return 'email'
+
+class complaint_service(models.Model):
+    
+    users = models.ForeignKey(users, on_delete=models.SET_NULL, null=True, blank=True)
+    regno= models.CharField(max_length=255,blank=True,null=True)
+    complaint = models.TextField(blank=True,null=True)
+    status= models.CharField(max_length=255,blank=True,null=True)
+    date_register= models.DateField(default=date.today())
+    type= models.CharField(max_length=255,blank=True,null=True)
