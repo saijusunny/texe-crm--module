@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-sm-12   text-left">
                                 <h5 class="card-category"></h5>
-                                <h2 class="card-title">Service & Complaints</h2>
+                                <h2 class="card-title" id="card-title">Complaints</h2>
                             </div>
                         </div>
                         <div class="row">
@@ -25,22 +25,25 @@
                                 
                                 <div class="float-left btn-group btn-group-toggle mr-4"  >
                                     <a  style="text-decoration: none;" onclick="show_compl()" >
-                                    <div class="btn btn-sm btn-primary btn-simple"  >
+                                    <div class="btn btn-sm btn-primary btn-simple active"  id="btncomp">
                                       
                                         <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Complaint</span>
                                         <span class="d-block d-sm-none">
-                                            <i class="tim-icons icon-single-02"></i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                              </svg>
                                         </span>
                                     </div>
 
                                     </a>
                                     <a  style="text-decoration: none;" onclick="show_service()">
 
-                                    <div class="btn btn-sm btn-primary btn-simple" id="1">
+                                    <div class="btn btn-sm btn-primary btn-simple"  id="btnser">
                                         <input type="radio" class="d-none d-sm-none" name="options">
                                         <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Service</span>
                                         <span class="d-block d-sm-none">
-                                            <i class="tim-icons icon-gift-2"></i>
+                                            <i class="tim-icons icon-settings-gear-63"></i>
                                         </span>
                                     </div>
                                     </a>
@@ -78,37 +81,54 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table class="table bg-fill bg-primary" style="border-radius: 5px;"  id="complaint">
+                        <table class="table bg-fill bg-primary" style="border-radius: 5px;display: block;
+                        overflow-x: auto;white-space: nowrap;text-align: center; "  id="complaint">
                             <thead>
-                                <th style="font-size: 18px;">Reg. No.</th>
-                                <th style="font-size: 18px;">Reg. Date</th>
-                                <th style="font-size: 18px;">Name</th>
-                                <th style="font-size: 18px;">Ph No</th>
-                                <th style="font-size: 18px;">Status</th>
+                                <th style="font-size: 15px;width: 200px;">Reg. No.</th>
+                                <th style="font-size: 15px;width: 200px;">Reg. Date</th>
+                                <th style="font-size: 15px;width: 200px;">Name</th>
+                                <th style="font-size: 15px;width: 200px;">Ph No</th>
+                                <th style="font-size: 15px;width: 200px;">Status</th>
+                                <th style="font-size: 15px;width: 200px;">Action</th>
                             </thead>
                             <tbody>
                             {% for k in comp%}
                               <tr class="table-active">
-                                <td style="font-size: 16px;">{{k.regno}}</td>
-                                <td style="font-size: 16px;">{{k.date_register}}</td>
-                                <td style="font-size: 16px;">{{k.users.name}}</td>
-                                <td style="font-size: 16px;">{{k.users.number}}</td>
-                                <td style="font-size: 16px;">{{k.status}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.regno}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.date_register}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.name}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.number}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.status}}</td>
+                                <td style="font-size: 16px;color: white;"><a href="" style="text-decoration: none; background: linear-gradient(40deg,#ff0080,#ff8c00 70%);border-radius: 15px; color: white;" class="pl-3 pr-3 pt-2 pb-2" title="edit"><i class="tim-icons icon-pencil"></i></a></td>
+                                
+                              </tr>
+                              {%endfor%}
+                              {% for k in comp%}
+                              <tr class="table-active">
+                                <td style="font-size: 16px;color: white;">{{k.regno}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.date_register}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.name}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.number}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.status}}</td>
+                                <td style="font-size: 16px;color: white;"><a href="" style="text-decoration: none; background: linear-gradient(40deg,#ff0080,#ff8c00 70%);border-radius: 15px; color: white;" class="pl-3 pr-3 pt-2 pb-2" title="edit"><i class="tim-icons icon-pencil"></i></a></td>
                                 
                               </tr>
                               {%endfor%}
                               
                               
+                              
                             </tbody>
                           </table>
 
-                          <table class="table bg-fill bg-primary" style="border-radius: 5px;display: none;"  id="service">
+                          <table class="table bg-fill bg-primary" style="border-radius: 5px;display: block;
+                          overflow-x: auto;white-space: nowrap;text-align: center; display: none;"  id="service">
                             <thead>
-                                <th style="font-size: 18px;">Reg. No.</th>
-                                <th style="font-size: 18px;">Reg. Date</th>
-                                <th style="font-size: 18px;">Name</th>
-                                <th style="font-size: 18px;">Ph No</th>
-                                <th style="font-size: 18px;">Status</th>
+                                <th style="font-size: 15px;width: 200px;">Reg. No.</th>
+                                <th style="font-size: 15px;width: 200px;">Reg. Date</th>
+                                <th style="font-size: 15px;width: 200px;">Name</th>
+                                <th style="font-size: 15px;width: 200px;">Ph No</th>
+                                <th style="font-size: 15px;width: 200px;">Status</th>
+                                <th style="font-size: 15px;width: 200px;">Action</th>
                             </thead>
                             <tbody>
                             
@@ -117,11 +137,12 @@
 
                               {% for k in serv%}
                               <tr class="table-active">
-                                <td style="font-size: 16px;">{{k.regno}}</td>
-                                <td style="font-size: 16px;">{{k.date_register}}</td>
-                                <td style="font-size: 16px;">{{k.users.name}}</td>
-                                <td style="font-size: 16px;">{{k.users.number}}</td>
-                                <td style="font-size: 16px;">{{k.status}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.regno}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.date_register}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.name}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.users.number}}</td>
+                                <td style="font-size: 16px;color: white;">{{k.status}}</td>
+                                <td style="font-size: 16px;color: white;"><a href="" style="text-decoration: none; background: linear-gradient(40deg,#ff0080,#ff8c00 70%);border-radius: 15px; color: white;" class="pl-3 pr-3 pt-2 pb-2" ><i class="tim-icons icon-pencil"></i></a></td>
                                 
                               </tr>
                               {%endfor%}
@@ -129,6 +150,8 @@
                               
                             </tbody>
                           </table>
+
+                          
                         
 
                     </div>
@@ -146,12 +169,20 @@
 
 <script>
     function show_compl(){
-        document.getElementById('complaint').style.display = 'table';
+        document.getElementById('complaint').style.display = 'block';
         document.getElementById('service').style.display = 'none';
+        document.getElementById('card-title').innerHTML="Complaint"
+        const btnEl = document.getElementById("btncomp").classList.add("active")
+        const btnEl2 = document.getElementById("btnser").classList.remove("active");
+      
     }
     function show_service(){
         document.getElementById('complaint').style.display = 'none';
-        document.getElementById('service').style.display = 'table';
+        document.getElementById('service').style.display = 'block';
+        document.getElementById('card-title').innerHTML="Service"
+
+        const btnEl = document.getElementById("btncomp").classList.remove("active");
+        const btnEl2 = document.getElementById("btnser").classList.add("active");
     }
 </script>
 {% endblock javascripts %}

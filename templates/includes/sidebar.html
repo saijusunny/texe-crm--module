@@ -8,66 +8,45 @@
                 <a href="{%url 'dashboard'%}"><img src="{% static 'images\logo.png'%}" class="w-50" alt="Texe Logo"></a>
             </div>
             <ul class="nav">
-                <li class="{% if 'index' in segment %} active {% endif %} ">
-                    <a href="/">
+                <li class='{% if segment == "dashboard"%} active {% endif %}'>
+                    <a href="{% url 'dashboard'%}">
                         <i class="tim-icons icon-chart-pie-36"></i>
-                        <p>Dashboard</p>
+                        <p style="font-size: 13px;">Dashboard</p>
                     </a>
                 </li>
 
-                <li class="{% if 'icons' in segment %} active {% endif %}">
+                <li class='{% if segment == "icons"%} active {% endif %}'>
+                    <a href="{% url 'icons'%}">
+                        <i class="tim-icons icon-atom"></i>
+                        <p style="font-size: 13px;">Orders</p>
+                    </a>
+                </li>
+
+                <li class='{% if segment == "ser_cmp"%} active {% endif %}'>
                     <a href="{% url 'ser_cmp'%}">
                         <i class="tim-icons icon-atom"></i>
-                        <p>Service & Complaintes</p>
+                        <p style="font-size: 13px;">Service & Complaintes</p>
+                    </a>
+                </li>
+
+                <li class='{% if segment == "staff_home"%} active {% endif %}'>
+                    <a href="{% url 'staff_home'%}">
+                        <i class="tim-icons icon-single-02"></i>
+                        <p style="font-size: 13px;">Staff Profile</p>
                     </a>
                 </li>
 
                 <li class="{% if 'icons' in segment %} active {% endif %}">
-                    <a href="/icons.html">
+                    <a href="{% url 'icons'%}">
                         <i class="tim-icons icon-atom"></i>
-                        <p>Icons</p>
+                        <p style="font-size: 13px;">Icons</p>
                     </a>
                 </li>
-                <li class="{% if 'map' in segment %} active {% endif %}">
-                    <a href="/map.html">
-                        <i class="tim-icons icon-pin"></i>
-                        <p>Maps</p>
-                    </a>
-                </li>
-                <li class="{% if 'notifications' in segment %} active {% endif %}">
-                    <a href="/notifications.html">
-                        <i class="tim-icons icon-bell-55"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="{% if 'user' in segment %} active {% endif %}">
-                    <a href="/user.html">
-                        <i class="tim-icons icon-single-02"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
-                <li class="{% if 'tables' in segment %} active {% endif %}">
-                    <a href="/tables.html">
-                        <i class="tim-icons icon-puzzle-10"></i>
-                        <p>Table List</p>
-                    </a>
-                </li>
-                <li class="{% if 'typography' in segment %} active {% endif %}">
-                    <a href="/typography.html">
-                        <i class="tim-icons icon-align-center"></i>
-                        <p>Typography</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="/rtl.html">
-                        <i class="tim-icons icon-world"></i>
-                        <p>RTL Support</p>
-                    </a>
-                </li>
+                
                 <li>
                     <a href="{% url 'login' %}">
                         <i class="tim-icons icon-button-power"></i>
-                        <p>Logout</p>
+                        <p style="font-size: 13px;">Logout</p>
                     </a>
                 </li>
             </ul>

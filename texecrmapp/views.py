@@ -24,7 +24,7 @@ import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 import numpy as np
-
+from django.urls import resolve
 # from requests import request
 
 def login(request):
@@ -41,18 +41,27 @@ def login(request):
     return render(request, 'home/login.html')
 
 def dashboard(request):
-    return render(request,'home/index.html')
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+    return render(request,'home/index.html',{'segment':segment})
 
 def registration(request):
     return render(request,'accounts/register.html')
+def staff_home(request):
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+    return render(request,'home/staff_home.html',{'segment':segment})
 
 def ser_cmp(request):
     comp=complaint_service.objects.filter(type="complaint")
  
     serv=complaint_service.objects.filter(type="service")
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
     context={
         'comp':comp,
-        'serv':serv
+        'serv':serv,
+        'segment':segment
     }
     return render(request,'home/service_compl.html',context)
 
@@ -65,9 +74,12 @@ def add_complaint(request):
     else:
         regst=1
     regss="CMP"+str(regst)+str(dt.day)+str(dt.year)[-2:]
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
     context={
         "names":names,
         "regss":regss,
+        'segment':segment
     }
     
     if request.method=="POST":
@@ -95,6 +107,8 @@ def add_complaint(request):
 
 def add_user_complaint(request):
     user_reg=users.objects.all().last()
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
     if request.method=='POST':
         urs=users()
         dt= date.today()
@@ -120,7 +134,7 @@ def add_user_complaint(request):
         urs.save()
         return redirect('add_complaint')
        
-    return render(request,"home/add_user_complaint.html")
+    return render(request,"home/add_user_complaint.html",{'segment':segment})
 
 
 def add_service(request):
@@ -132,9 +146,12 @@ def add_service(request):
     else:
         regst=1
     regss="SER"+str(regst)+str(dt.day)+str(dt.year)[-2:]
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
     context={
         "names":names,
         "regss":regss,
+        'segment':segment
     }
     
     if request.method=="POST":
@@ -162,6 +179,8 @@ def add_service(request):
 
 def add_user_service(request):
     user_reg=users.objects.all().last()
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
     if request.method=='POST':
         urs=users()
         dt= date.today()
@@ -187,9 +206,14 @@ def add_user_service(request):
         urs.save()
         return redirect('add_service')
        
-    return render(request,"home/add_user_service.html")
+    return render(request,"home/add_user_service.html",{'segment':segment})
 
 def users_lst(request):
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+    context={
+        'segment':segment
+    }
     return render(request,"home/user_list.html")
 
 def icons(request):

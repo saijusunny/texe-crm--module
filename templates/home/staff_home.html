@@ -1,0 +1,100 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Service % Complaints {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-chart">
+                    <div class="card-header ">
+                        <div class="row">
+                            <div class="col-sm-12   text-left">
+                                <h5 class="card-category"></h5>
+                                <h2 class="card-title" id="card-title">Staff</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+
+                                
+                            </div>
+                            <div class="col-6">
+
+                                
+                                
+                                <div class="float-right btn-group btn-group-toggle mr-4"  >
+                                    <a  style="text-decoration: none;" href="{% url 'add_complaint'%}">
+                                    <div class="btn btn-sm btn-primary btn-simple"  >
+                                      
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Add Staff</span>
+                                        <span class="d-block d-sm-none">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </span>
+                                    </div>
+
+                                    </a>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card Title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary form-control">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card Title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <div class="card">
+                                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Placeholder Image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card Title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+{% endblock javascripts %}
