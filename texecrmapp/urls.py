@@ -11,6 +11,7 @@ urlpatterns = [
     path('add_user_complaint',views.add_user_complaint, name='add_user_complaint'),
     path('add_service',views.add_service, name='add_service'),
     path('add_user_service',views.add_user_service, name='add_user_service'),
+    path('add_staff',views.add_staff, name='add_staff'),
     
     path('registration',views.registration, name='registration'),
 

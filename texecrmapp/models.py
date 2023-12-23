@@ -24,6 +24,7 @@ class users(models.Model):
     dob=models.DateField(null=True,)
     location = models.CharField(max_length=250, null=True, blank=True)
     otp= models.CharField(max_length=250, null=True, blank=True)
+    designation=models.CharField(max_length=250, null=True, blank=True)
     def get_email_field_name(self):
         return 'email'
 

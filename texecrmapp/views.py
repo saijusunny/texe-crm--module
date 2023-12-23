@@ -47,10 +47,60 @@ def dashboard(request):
 
 def registration(request):
     return render(request,'accounts/register.html')
+
 def staff_home(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
     return render(request,'home/staff_home.html',{'segment':segment})
+
+def add_staff(request):
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+
+    if request.method=="POST":
+        user_reg=users.objects.all().last()
+        dt= date.today()
+        digits = string.digits
+        otp = ''.join(random.choices(digits, k=6))
+        if user_reg:
+            regst=int(user_reg.id)+1
+        else:
+            regst=1
+        usr=users()
+        em=request.POST.get('email', None)
+        if users.objects.filter(email=em).exists():
+           
+            messages.error(request,"Email Already exists !")
+            return redirect('add_staff')
+        else:
+            usr.regno= "STF"+str(regst)+str(dt.day)+str(dt.year)[-2:]
+            usr.name=request.POST.get('name', None)
+            usr.addres=request.POST.get('address', None)
+            usr.number=request.POST.get('phn_no', None)
+            if request.FILES.get('propic', None) == "":
+                usr.profile= 'static\images\static_image\icon.svg'
+            else:
+
+                usr.profile=request.FILES.get('propic', None)
+            usr.email=request.POST.get('email', None)
+            usr.location=request.POST.get('location', None)
+            usr.designation=request.POST.get('desi', None)
+            usr.dob=request.POST.get('dob', None)
+            usr.status="active"
+            usr.role="staff"
+            usr.password=otp
+            usr.save()
+            current_site = get_current_site(request)
+            mail_subject = "Texe Registration Success"
+            message = f"Hai {usr.name},\n\nUser name : {em}\nPassword : {otp}\nClick the link {current_site} to log in to your account."
+
+            to_email = usr.email
+            send_email = EmailMessage(mail_subject,message,to = [to_email])
+            send_email.send()
+        return redirect('staff_home')
+
+
+    return render(request,'home/add_staff.html',{'segment':segment})
 
 def ser_cmp(request):
     comp=complaint_service.objects.filter(type="complaint")
