@@ -32,6 +32,33 @@
                                 <span class="d-lg-none d-md-block">Search</span>
                             </button>
                         </li>
+
+                        {% if user%}
+                            {% if user.role == "staff"%}
+                            
+                                {% if user.orders == "on"%}
+                                <li class="dropdown nav-item">
+                                    <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                        <div class="notification d-none d-lg-block d-xl-block"></div>
+                                        <i class="tim-icons icon-sound-wave"></i>
+                                        <p class="d-lg-none">
+                                            Notifications
+                                        </p>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                                        <li class="nav-link"><a href="#" class="nav-item dropdown-item">Delivery Today</a></li>
+                                        <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Delivery Yesterday</a></li>
+                                        <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Delivery Tomorrow</a></li>
+                                        <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                            notification</a></li>
+                                        <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
+                                            one</a></li>
+                                    </ul>
+                                </li>
+                                {%else%}
+                                {%endif%}
+                            {%endif%}
+                        {%else%}
                         <li class="dropdown nav-item">
                             <a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                 <div class="notification d-none d-lg-block d-xl-block"></div>
@@ -41,22 +68,39 @@
                                 </p>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-                                <li class="nav-link"><a href="#" class="nav-item dropdown-item">Mike John responded to
-                                    your email</a></li>
-                                <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">You
-                                    have 5 more tasks</a></li>
-                                <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Your
-                                    friend Michael is in town</a></li>
+                                <li class="nav-link"><a href="#" class="nav-item dropdown-item">Delivery Today</a></li>
+                                <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Delivery Yesterday</a></li>
+                                <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Delivery Tomorrow</a></li>
                                 <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
                                     notification</a></li>
                                 <li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another
                                     one</a></li>
                             </ul>
                         </li>
+
+                        {%endif%}
+                        
                         <li class="dropdown nav-item">
-                            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <a href="{% url 'logout'%}" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                 <div class="photo">
+                                    {% if user%}
+                                        {% if user.role == "staff"%}
+                                        
+                                            {% if user.complaint == "on"%}
+                                                {% if user.profile == "static\images\static_image\icon.svg"%}
+                                                    <img src="{% static 'assets\img\anime3.png'%}" alt="Profile Photo">
+                                                {% elif user.profile == ""%}
+                                                    <img src="{% static 'assets\img\anime3.png'%}" alt="Profile Photo">
+                                                {%else%}
+                                                <img src="{{user.profile.url}}" alt="Profile Photo">
+                                                {%endif%}
+                                            {%else%}
+                                            {%endif%}
+                                        {%endif%}
+                                    {%else%}
                                     <img src="{% static 'assets\img\anime3.png'%}" alt="Profile Photo">
+
+                                    {%endif%}
                                 </div>
                                 <b class="caret d-none d-lg-block d-xl-block"></b>
                                 <p class="d-lg-none">

@@ -9,7 +9,7 @@
 
   <div class="content">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8" style="margin: 0 auto;">
         <div class="card">
           <div class="card-header">
             <div class="row">
@@ -21,7 +21,7 @@
               
               <div class="col-6 pl-md-1" style="text-align: right;">
                 <div class="form-group btn-fill">
-                  <a  style="text-decoration: none;" href="{% url 'add_staff'%}">
+                  <a  style="text-decoration: none;" href="{% url 'delete_staff' usr.id%}" onclick="return confirm('Are you sure, you want to delete it?')">
                   <div class="btn btn-sm btn-primary btn-simple"  >
                                       
                     <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Delete</span>
@@ -136,38 +136,7 @@
           
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card card-user">
-          <div class="card-body">
-            <p class="card-text">
-              <div class="author">
-                <div class="block block-one"></div>
-                <div class="block block-two"></div>
-                <div class="block block-three"></div>
-                <div class="block block-four"></div>
-                <a href="javascript:void(0)">
-                  {% if usr.profile == "static\images\static_image\icon.svg"%}
-                  <img class="avatar" src="{% static 'noimage.jpg'%}" alt="...">
-                  {% elif usr.profile == ""%}
-                  <img class="avatar" src="{% static 'noimage.jpg'%}" alt="...">
-                  {%else%}
-                  <img src="{{usr.profile.url}}" class="card-img-top" alt="Placeholder Image">
-                  {%endif%}
-                  
-                  <h5 class="title">{{usr.name}}</h5>
-                </a>
-                <p class="description">
-                  {{usr.designation}}
-                </p>
-              </div>
-            </p>
-            <div class="card-description">
-              Do not be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-            </div>
-          </div>
-          
-        </div>
-      </div>
+      
     </div>
   </div>
 

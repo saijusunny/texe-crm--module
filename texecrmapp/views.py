@@ -33,17 +33,28 @@ def login(request):
         password = request.POST.get('pass')
         print(username)
         user = authenticate(username=username, password=password)
-        if user.is_superuser:
-            request.session['userid'] = request.user.id
-            return redirect('dashboard')
-        else:
-            pass
+        try:
+            if users.objects.filter(email=username, password=password,role="staff").exists():
+
+                    member = users.objects.get(email=username, password=password)
+                    request.session['userid'] = member.id
+                    return redirect('staff_index')
+            elif user.is_superuser:
+                request.session['userid'] = request.user.id
+                return redirect('dashboard')
+            
+            else:
+            
+                messages.error(request, 'Invalid username or password')
+        except:
+            messages.error(request, 'Invalid username or password')
     return render(request, 'home/login.html')
 
 def dashboard(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
-    return render(request,'home/index.html',{'segment':segment})
+    user=None
+    return render(request,'home/index.html',{'segment':segment,"user":user,})
 
 def registration(request):
     return render(request,'accounts/register.html')
@@ -52,12 +63,13 @@ def staff_home(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
     staffs=users.objects.filter(role="staff")
-    return render(request,'home/staff_home.html',{'segment':segment,'staffs':staffs})
+    user=None
+    return render(request,'home/staff_home.html',{'segment':segment,'staffs':staffs,'user':user,})
 
 def add_staff(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
-
+    user=None
     if request.method=="POST":
         user_reg=users.objects.all().last()
         dt= date.today()
@@ -104,15 +116,15 @@ def add_staff(request):
         return redirect('staff_home')
 
 
-    return render(request,'home/add_staff.html',{'segment':segment})
+    return render(request,'home/add_staff.html',{'segment':segment,'user':user,})
 
 
-def edit_staff(request):
-    if request.method=="POST":
-        ids=request.POST.get('id', None)
-        usr=users.objects.get(id=ids)
-        return render(request,'home\edits_staff.html',{'usr':usr})
-    return redirect('staff_home')
+def edit_staff(request,id):
+
+    usr=users.objects.get(id=id)
+    user=None
+    return render(request,'home\edits_staff.html',{'usr':usr,'user':user,})
+ 
 
 def save_edit_staff(request,id):
     usr=users.objects.get(id=id)
@@ -144,6 +156,10 @@ def save_edit_staff(request,id):
 
 
     return redirect('staff_home')
+def delete_staff(request,id):
+    usr=users.objects.get(id=id)
+    usr.delete()
+    return redirect('staff_home')
 
 def ser_cmp(request):
     comp=complaint_service.objects.filter(type="complaint")
@@ -151,15 +167,18 @@ def ser_cmp(request):
     serv=complaint_service.objects.filter(type="service")
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
+    user=None
     context={
         'comp':comp,
         'serv':serv,
-        'segment':segment
+        'segment':segment,
+        'user':user,
     }
     return render(request,'home/service_compl.html',context)
 
 def add_complaint(request):
     names=users.objects.filter(role="user")
+    user=None
     dt= date.today()
     cmp_reg=complaint_service.objects.all().last()
     if cmp_reg:
@@ -172,7 +191,8 @@ def add_complaint(request):
     context={
         "names":names,
         "regss":regss,
-        'segment':segment
+        'segment':segment,
+        'user':user,
     }
     
     if request.method=="POST":
@@ -202,6 +222,7 @@ def add_user_complaint(request):
     user_reg=users.objects.all().last()
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
+    user=None
     if request.method=='POST':
         urs=users()
         dt= date.today()
@@ -227,13 +248,14 @@ def add_user_complaint(request):
         urs.save()
         return redirect('add_complaint')
        
-    return render(request,"home/add_user_complaint.html",{'segment':segment})
+    return render(request,"home/add_user_complaint.html",{'segment':segment,'user':user,})
 
 
 def add_service(request):
     names=users.objects.filter(role="user")
     dt= date.today()
     cmp_reg=complaint_service.objects.all().last()
+    user=None
     if cmp_reg:
         regst=int(cmp_reg.id)+1
     else:
@@ -244,7 +266,8 @@ def add_service(request):
     context={
         "names":names,
         "regss":regss,
-        'segment':segment
+        'segment':segment,
+        'user':user,
     }
     
     if request.method=="POST":
@@ -274,6 +297,7 @@ def add_user_service(request):
     user_reg=users.objects.all().last()
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
+    user=None
     if request.method=='POST':
         urs=users()
         dt= date.today()
@@ -299,15 +323,39 @@ def add_user_service(request):
         urs.save()
         return redirect('add_service')
        
-    return render(request,"home/add_user_service.html",{'segment':segment})
+    return render(request,"home/add_user_service.html",{'segment':segment,'user':user})
 
 def users_lst(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
+    user=None
     context={
-        'segment':segment
+        'segment':segment,
+        'user':user,
     }
     return render(request,"home/user_list.html")
 
 def icons(request):
     return render(request,"home/icons.html")
+
+
+############################################################STAFF MODULE
+
+def staff_index(request):
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+    ids=request.session['userid']
+    user=users.objects.get(id=ids)
+    print(user.role)
+    context={
+        'segment':segment,
+        'user':user,
+    }
+    return render(request,"staff\staff_index.html",context)
+
+def logout(request):
+    if 'userid' in request.session:  
+        request.session.flush()
+        return redirect('/')
+    else:
+        return redirect('/')
