@@ -12,6 +12,8 @@ urlpatterns = [
     path('add_service',views.add_service, name='add_service'),
     path('add_user_service',views.add_user_service, name='add_user_service'),
     path('add_staff',views.add_staff, name='add_staff'),
+    path('edit_staff',views.edit_staff, name='edit_staff'),
+    path('save_edit_staff/<int:id>',views.save_edit_staff, name='save_edit_staff'),
     
     path('registration',views.registration, name='registration'),
 

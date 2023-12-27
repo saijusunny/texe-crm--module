@@ -51,7 +51,8 @@ def registration(request):
 def staff_home(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
-    return render(request,'home/staff_home.html',{'segment':segment})
+    staffs=users.objects.filter(role="staff")
+    return render(request,'home/staff_home.html',{'segment':segment,'staffs':staffs})
 
 def add_staff(request):
     resolved_func = resolve(request.path_info).func
@@ -77,7 +78,7 @@ def add_staff(request):
             usr.name=request.POST.get('name', None)
             usr.addres=request.POST.get('address', None)
             usr.number=request.POST.get('phn_no', None)
-            if request.FILES.get('propic', None) == "":
+            if request.FILES.get('propic', None) == None:
                 usr.profile= 'static\images\static_image\icon.svg'
             else:
 
@@ -89,6 +90,9 @@ def add_staff(request):
             usr.status="active"
             usr.role="staff"
             usr.password=otp
+            usr.complaint=request.POST.get('complaintss',None)
+            usr.orders=request.POST.get('order',None)
+            usr.preformance="0"
             usr.save()
             current_site = get_current_site(request)
             mail_subject = "Texe Registration Success"
@@ -101,6 +105,45 @@ def add_staff(request):
 
 
     return render(request,'home/add_staff.html',{'segment':segment})
+
+
+def edit_staff(request):
+    if request.method=="POST":
+        ids=request.POST.get('id', None)
+        usr=users.objects.get(id=ids)
+        return render(request,'home\edits_staff.html',{'usr':usr})
+    return redirect('staff_home')
+
+def save_edit_staff(request,id):
+    usr=users.objects.get(id=id)
+
+    if request.method=="POST":
+        
+        em=request.POST.get('email', None)
+    
+        
+        usr.name=request.POST.get('name', None)
+        usr.addres=request.POST.get('address', None)
+        usr.number=request.POST.get('phn_no', None)
+        if request.FILES.get('propic', None) == None:
+            pass
+        else:
+
+            usr.profile=request.FILES.get('propic', None)
+        usr.email=request.POST.get('email', None)
+        usr.location=request.POST.get('location', None)
+        usr.designation=request.POST.get('desi', None)
+        usr.dob=request.POST.get('dob', None)
+
+        usr.complaint=request.POST.get('complaintss',None)
+        usr.orders=request.POST.get('order',None)
+    
+        usr.save()
+        
+        return redirect('staff_home')
+
+
+    return redirect('staff_home')
 
 def ser_cmp(request):
     comp=complaint_service.objects.filter(type="complaint")

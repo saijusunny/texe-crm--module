@@ -25,6 +25,9 @@ class users(models.Model):
     location = models.CharField(max_length=250, null=True, blank=True)
     otp= models.CharField(max_length=250, null=True, blank=True)
     designation=models.CharField(max_length=250, null=True, blank=True)
+    complaint=models.CharField(max_length=250, null=True, blank=True)
+    orders=models.CharField(max_length=250, null=True, blank=True)
+    preformance=models.CharField(max_length=250, null=True, blank=True)
     def get_email_field_name(self):
         return 'email'
 
