@@ -27,6 +27,15 @@ import numpy as np
 from django.urls import resolve
 # from requests import request
 
+
+# clientapp connection
+from texeclientapp.views import *
+from texeclientapp.models import *
+
+# work app connection 
+from texeworkapp.views import *
+from texeworkapp.models import *
+
 def login(request):
     if request.method == "POST":
         username  = request.POST.get('use')
@@ -57,6 +66,14 @@ def dashboard(request):
     return render(request,'home/index.html',{'segment':segment,"user":user,})
 
 def registration(request):
+
+    user=complaint_service.objects.all().count()
+    print("first")
+    print(user)
+    texeclietapp_response = regist(request)
+    workss = worksssddd(request)
+
+    
     return render(request,'accounts/register.html')
 
 def staff_home(request):
@@ -338,6 +355,90 @@ def users_lst(request):
 def icons(request):
     return render(request,"home/icons.html")
 
+def get_date_event(request):
+    day = request.GET.get('day')
+    month = request.GET.get('month')
+    year = request.GET.get('year')
+    all_event = events.objects.filter(start__day=day, start__month=month, start__year=year)
+    names = [obj.name for obj in all_event]
+    strt = [obj.start.hour for obj in all_event]
+    ends = [obj.end.hour for obj in all_event]
+   
+    return JsonResponse({"status":" not","strt": strt,"ends":ends,"names":names})
+
+def all_events(request):
+    all_events = events.objects.all()
+    out=[]
+    for event in all_events:
+        out.append({
+            "title":event.name,
+            "id":event.id,
+            "start":event.start.strftime("%m/%d/%Y, %H:%M:%S"), 
+        })
+    return JsonResponse(out, safe=False) 
+ 
+ 
+def add_event(request):
+    
+    if request.method == 'POST':
+        start = request.POST.get('str_dt', None)
+        end = request.POST.get('end_dt', None)
+        title = request.POST.get('des', None)
+       
+
+        event = events(name=title, start=start,end=end, user=None) 
+        event.save()
+        data = {}
+        return redirect('admin_home')
+    return redirect('admin_home')
+ 
+def update(request):
+    start = request.GET.get("start", None)
+    end = request.GET.get("end", None)
+    title = request.GET.get("title", None)
+    id = request.GET.get("id", None)
+    event = events.objects.get(id=id)
+    event.start = start
+    event.end = end
+    event.name = title
+    event.save()
+    data = {}
+    return JsonResponse(data)
+ 
+def remove(request):
+    id = request.GET.get("id", None)
+    try:
+        event = events.objects.get(id=id)
+        spl=str(event.name).split(" ")
+        dt=spl[0]
+        or_nm=spl[1]
+        date=event.start
+        data = {'dt':dt,'date':date,'or_nm':or_nm}
+    except:
+        event = events.objects.get(id=id)
+        title=event.name
+        
+        data = {'title':title,}
+    return JsonResponse(data)
+
+def orders(request):
+    resolved_func = resolve(request.path_info).func
+    segment=resolved_func.__name__
+    user=None
+    context={
+            'segment':segment,
+            'user':user,
+        }
+    return render(request, 'home/orders.html', context)
+
+def view_items_orders(request):
+    segment="orders"
+    user=None
+    context={
+            'segment':segment,
+            'user':user,
+        }
+    return render(request, 'home/view_items_orders.html', context)
 
 ############################################################STAFF MODULE
 

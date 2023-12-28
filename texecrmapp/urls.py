@@ -15,6 +15,16 @@ urlpatterns = [
     path('edit_staff/<int:id>',views.edit_staff, name='edit_staff'),
     path('save_edit_staff/<int:id>',views.save_edit_staff, name='save_edit_staff'),
     path('delete_staff/<int:id>',views.delete_staff, name='delete_staff'),
+    path('orders',views.orders, name='orders'),
+
+    path('all_events',views.all_events, name='all_events'),
+    path('add_event',views.add_event, name='add_event'),
+    path('update',views.update, name='update'),
+    path('remove',views.remove, name='remove'),
+    path('get_date_event',views.get_date_event, name='get_date_event'),
+    path('view_items_orders',views.view_items_orders, name='view_items_orders'),
+
+    
     
     #########################################################################Staff Module
     path('staff_index',views.staff_index, name='staff_index'),

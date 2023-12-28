@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'texecrmapp',  
+    'texecrmapp', 
+    'texeworkapp' ,
+    'texeclientapp', 
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,15 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     },
-    'external_db': {
+    'form1_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'texe__work',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    },
+    'form2_db': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'texeclient',
         'USER': 'root',
@@ -113,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+DATABASE_ROUTERS = ['texeworkapp.routers.App1Router','texeclientapp.routers.App2Router',]
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
