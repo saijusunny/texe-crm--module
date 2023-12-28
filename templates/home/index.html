@@ -28,21 +28,21 @@
                                 <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                                     <label class="btn btn-sm btn-primary btn-simple active" id="0">
                                         <input type="radio" name="options" checked>
-                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Accounts</span>
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Item</span>
                                         <span class="d-block d-sm-none">
                         <i class="tim-icons icon-single-02"></i>
                     </span>
                                     </label>
                                     <label class="btn btn-sm btn-primary btn-simple" id="1">
                                         <input type="radio" class="d-none d-sm-none" name="options">
-                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Purchases</span>
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Category</span>
                                         <span class="d-block d-sm-none">
                         <i class="tim-icons icon-gift-2"></i>
                     </span>
                                     </label>
                                     <label class="btn btn-sm btn-primary btn-simple" id="2">
                                         <input type="radio" class="d-none" name="options">
-                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sessions</span>
+                                        <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Orders</span>
                                         <span class="d-block d-sm-none">
                         <i class="tim-icons icon-tap-02"></i>
                     </span>
@@ -1142,8 +1142,8 @@ demo = {
 
 
 
-    var chart_labels = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-    var chart_data = [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 200];
+    var chart_labels = [{% for data in data %} '{{ data.name }}', {% endfor %}];
+    var chart_data = [{% for data in data %} {{ data.buying_count }}, {% endfor %}];
 
 
     var ctx = document.getElementById("chartBig1").getContext('2d');
@@ -1185,7 +1185,8 @@ demo = {
       myChartData.update();
     });
     $("#1").click(function() {
-      var chart_data = [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120];
+      var chart_labels = [{% for data in sub_cat %} '{{ data.subcategory }}', {% endfor %}];
+      var chart_data = [{% for data in sub_cat %} {{ data.buying_count }}, {% endfor %}];
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
       data.labels = chart_labels;
@@ -1193,7 +1194,8 @@ demo = {
     });
 
     $("#2").click(function() {
-      var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 300];
+      var chart_labels = [{% for data in nm %} '{{data}}', {% endfor %}];
+      var chart_data = [{% for data in cnt %} '{{ data }}', {% endfor %}];
       var data = myChartData.config.data;
       data.datasets[0].data = chart_data;
       data.labels = chart_labels;

@@ -63,13 +63,30 @@ def dashboard(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
     user=None
-    return render(request,'home/index.html',{'segment':segment,"user":user,})
+    data = item.objects.all()
+    sub_cat=sub_category.objects.all()
+    today = datetime.now()
+    sub=orders.objects.filter(date__month=today.month).values_list('date__day', flat=True).distinct()
 
-def registration(request):
+    nm=[]
+    cnt=[]
+    for i in sub:
+        
+        nm.append(i)
+        qty=orders.objects.filter(date__day=i).count()
+        cnt.append(qty)
+ 
+    return render(request,'home/index.html',{'segment':segment,"user":user,'sub_cat':sub_cat,'nm':nm,
+        'cnt':cnt,'data': data,})
+
+def registrations(request):
 
     user=complaint_service.objects.all().count()
-    print("first")
+    reg=registration.objects.all().count()
+    orde=orders.objects.get(id=24)
+    print(reg)
     print(user)
+    print(orde.regno)
     texeclietapp_response = regist(request)
     workss = worksssddd(request)
 
@@ -421,7 +438,7 @@ def remove(request):
         data = {'title':title,}
     return JsonResponse(data)
 
-def orders(request):
+def orders_dta(request):
     resolved_func = resolve(request.path_info).func
     segment=resolved_func.__name__
     user=None

@@ -19,8 +19,8 @@
                     {% if user.role == "staff"%}
                     
                         {% if user.orders == "on"%}
-                            <li class='{% if segment == "orders"%} active {% endif %}'>
-                                <a href="{% url 'orders'%}">
+                            <li class='{% if segment == "orders_dta"%} active {% endif %}'>
+                                <a href="{% url 'orders_dta'%}">
                                     <i class="tim-icons icon-atom"></i>
                                     <p style="font-size: 13px;">Orders</p>
                                 </a>
@@ -29,8 +29,8 @@
                         {%endif%}
                     {%endif%}
                 {%else%}
-                <li class='{% if segment == "orders"%} active {% endif %}'>
-                    <a href="{% url 'orders'%}">
+                <li class='{% if segment == "orders_dta"%} active {% endif %}'>
+                    <a href="{% url 'orders_dta'%}">
                         <i class="tim-icons icon-atom"></i>
                         <p style="font-size: 13px;">Orders</p>
                     </a>
