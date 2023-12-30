@@ -24,7 +24,8 @@ urlpatterns = [
     path('get_date_event',views.get_date_event, name='get_date_event'),
     path('view_items_orders',views.view_items_orders, name='view_items_orders'),
 
-    
+    path('filter_date_event',views.filter_date_event, name='filter_date_event'),
+    path('create_event',views.create_event, name='create_event'),
     
     #########################################################################Staff Module
     path('staff_index',views.staff_index, name='staff_index'),

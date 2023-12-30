@@ -67,6 +67,7 @@ def dashboard(request):
     sub_cat=sub_category.objects.all()
     today = datetime.now()
     sub=orders.objects.filter(date__month=today.month).values_list('date__day', flat=True).distinct()
+    event=events.objects.filter(start__day=date.today().day)
 
     nm=[]
     cnt=[]
@@ -75,9 +76,51 @@ def dashboard(request):
         nm.append(i)
         qty=orders.objects.filter(date__day=i).count()
         cnt.append(qty)
+
+    
  
     return render(request,'home/index.html',{'segment':segment,"user":user,'sub_cat':sub_cat,'nm':nm,
-        'cnt':cnt,'data': data,})
+        'cnt':cnt,'data': data,'event':event})
+
+
+def filter_date_event(request):
+    if request.method=="POST":
+        dates=request.POST.get('date_filter',None)
+        segment="dashboard"
+        user=None
+        data = item.objects.all()
+        sub_cat=sub_category.objects.all()
+        today = datetime.now()
+        sub=orders.objects.filter(date__month=today.month).values_list('date__day', flat=True).distinct()
+        event=events.objects.filter(start=dates)
+
+        nm=[]
+        cnt=[]
+        for i in sub:
+            
+            nm.append(i)
+            qty=orders.objects.filter(date__day=i).count()
+            cnt.append(qty)
+
+        
+    
+        return render(request,'home/index.html',{'segment':segment,"user":user,'sub_cat':sub_cat,'nm':nm,
+            'cnt':cnt,'data': data,'event':event})
+    return redirect('dashboard')
+
+def create_event(request):
+    if request.method=="POST":
+        st_dt=request.POST.get('start_dt',None)
+        end_dt=request.POST.get('end_dt',None)
+        text=request.POST.get('event_des',None)
+        ev=events()
+        ev.name=request.POST.get('event_des',None)
+        ev.start=request.POST.get('start_dt',None)
+        ev.end=request.POST.get('end_dt',None)
+        ev.save()
+        return redirect('dashboard')
+        
+    return redirect('dashboard')
 
 def registrations(request):
 
@@ -451,9 +494,25 @@ def orders_dta(request):
 def view_items_orders(request):
     segment="orders"
     user=None
+    items=item.objects.all()
+
+    names=users.objects.filter(role="user")
+    dt= date.today()
+    cmp_reg=orders.objects.all().last()
+    user=None
+    if cmp_reg:
+        regst=int(cmp_reg.id)+1
+    else:
+        regst=1
+    regss="ORD"+str(regst)+str(dt.day)+str(dt.year)[-2:]
+
     context={
             'segment':segment,
             'user':user,
+            'items':items,
+            'regss':regss,
+            'names':names,
+
         }
     return render(request, 'home/view_items_orders.html', context)
 

@@ -41,9 +41,3 @@ class complaint_service(models.Model):
     type= models.CharField(max_length=255,blank=True,null=True)
 
 
-class events(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.TextField(blank=True,null=True)
-    start = models.DateTimeField(null=True,blank=True)
-    end = models.DateTimeField(null=True,blank=True)
-    user=models.ForeignKey(users, on_delete=models.CASCADE, null=True, blank=True)

@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Service % Complaints {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-8" style="margin: 0 auto;">
+                        <div class="card card-chart">
+                            <div class="card-header text-center py-4">
+                                <h4 class="title">
+                                    Create Product
+                                </h4>
+    
+                                     
+    
+                            </div>
+
+                            <div class="card-body px-5 py-3">
+                                <form action="{% url 'create_event'%}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="col-md-12 px-md-1">
+                                        <div class="form-group">
+                                            <label style="font-size: 16px;">Register number</label>
+                                            <input type="text" placeholder="" class="form-control" name="regno" value="{{regss}}">
+                                        </div>
+                                        <span class="text-danger">{{ form.password2.errors }}</span>
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                           
+                                        <div class="form-group">
+                                            <label style="font-size: 16px;">Name</label>
+                                            <div class="row">
+                                                <div class="col-10">
+                                                    <select name="name" class="form-control">
+                                                        {% for i in names %}
+                                                        <option value="{{i.id}}" style="color: black;">{{i.name}}</option>
+                                                        {%endfor%}
+                                                    </select>
+                                                </div>
+                                                <div class="col-1">
+                                                    <a href="{% url 'add_user_complaint'%}"style="color: white; border: 2px solid #e14eca;" class=" form-control" title="add user">
+                                                        <i class="tim-icons icon-simple-add" style="margin-left: -6px; margin-top: -5px;"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                      <div class="form-group">
+                                          <label style="font-size: 16px;">End date and time</label>
+                                          <input type="datetime-local" placeholder="" class="form-control" name="end_dt">
+                                      </div>
+                                      
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                      <div class="form-group">
+                                          <label style="font-size: 16px;">Events</label>
+                                          <textarea name="event_des" id="" class="form-control" placeholder="type your event"></textarea>
+                                      </div>
+                                      
+                                    </div>
+                                    <div class="col-md-12 px-md-1">
+                                      <div class="form-group">
+                                          <input type="submit" value="create" class="btn btn-fill btn-primary">
+                                      </div>
+                                      
+                                    </div>
+                                    
+                                  </form>
+                            </div>
+              
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+{% endblock javascripts %}
