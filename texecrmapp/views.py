@@ -67,7 +67,7 @@ def dashboard(request):
     sub_cat=sub_category.objects.all()
     today = datetime.now()
     sub=orders.objects.filter(date__month=today.month).values_list('date__day', flat=True).distinct()
-    event=events.objects.filter(start__day=date.today().day)
+    event=events.objects.filter(start=date.today())
 
     nm=[]
     cnt=[]
@@ -127,9 +127,7 @@ def registrations(request):
     user=complaint_service.objects.all().count()
     reg=registration.objects.all().count()
     orde=orders.objects.get(id=24)
-    print(reg)
-    print(user)
-    print(orde.regno)
+
     texeclietapp_response = regist(request)
     workss = worksssddd(request)
 
@@ -490,32 +488,169 @@ def orders_dta(request):
             'user':user,
         }
     return render(request, 'home/orders.html', context)
-
-def view_items_orders(request):
-    segment="orders"
+def prouct_list(request):
+    segment="orders_dta"
     user=None
-    items=item.objects.all()
+    
 
+    items=item.objects.all()
+    return render(request, 'home/product_list.html', {'items':items,'segment':segment,'user':user,})
+
+def view_items_orders(request,id):
+    segment="orders_dta"
+    user=None
     names=users.objects.filter(role="user")
+    user=None
     dt= date.today()
     cmp_reg=orders.objects.all().last()
-    user=None
     if cmp_reg:
         regst=int(cmp_reg.id)+1
     else:
         regst=1
     regss="ORD"+str(regst)+str(dt.day)+str(dt.year)[-2:]
 
+    items=item.objects.get(id=id)
+    sub=sub_images.objects.filter(item=items)
+    color=sub_color.objects.filter(item=id)
+    size=sub_size.objects.filter(item=id)
+    
+    
     context={
             'segment':segment,
             'user':user,
+    
             'items':items,
-            'regss':regss,
+            'sub':sub,
+            'color':color,
+            'size':size,
             'names':names,
+            'regss':regss,
+            'ids':id
 
         }
     return render(request, 'home/view_items_orders.html', context)
 
+
+def add_user_order(request,id):
+    user_reg=users.objects.all().last()
+
+    segment="orders_dta"
+    user=None
+    if request.method=='POST':
+        urs=users()
+        dt= date.today()
+        digits = string.digits
+        otp = ''.join(random.choices(digits, k=6))
+        if user_reg:
+            regst=int(user_reg.id)+1
+        else:
+            regst=1
+        urs.regno= "CUS"+str(regst)+str(dt.day)+str(dt.year)[-2:]
+        urs.name = request.POST.get('name',None)
+        urs.email = request.POST.get('email',None)
+        urs.number = request.POST.get('phn_no',None)
+        urs.password = otp
+        if request.FILES.get('propic',None)=="":
+            pass
+        else:
+            profile = request.FILES.get('propic',None)
+        urs.joindate = date.today()
+        urs.status ="active"
+        urs.addres =  request.POST.get('address',None)
+        urs.role = "user"
+        urs.save()
+        return redirect('view_items_orders',id)
+    return render(request, 'home/add_user_order.html', {'segment':segment,'user':user})
+
+
+def cart_cust_size(request):
+    ele = request.GET.get('ele')
+    cart_id = request.GET.get('cart_id')
+    prd_id = request.GET.get('prd_id')
+    itm=item.objects.get(id=prd_id)
+    print(cart_id)
+    ids=request.GET.get('usrs')
+    usr=users.objects.get(id=ids)
+    if cart_id=="":
+        crt=cart_crm()
+        crt.user = usr
+        crt.item_id = itm.id
+        crt.model = None
+    else:
+        crt=cart_crm.objects.get(id=cart_id)
+
+    
+    crt.size= ele
+    crt.save()
+    return JsonResponse({"status":" not", "ids":crt.id})
+
+def cart_change_color(request):
+    ele = request.GET.get('ele')
+    cart_id = request.GET.get('cart_id')
+    prd_id = request.GET.get('prd_id')
+    idsr=request.GET.get('id')
+    itm=item.objects.get(id=prd_id)
+    ids=request.GET.get('usrs')
+    usr=users.objects.get(id=ids)
+    if cart_id=="":
+        crt=cart_crm()
+        crt.user = usr
+        crt.item_id = itm.id
+        crt.model = None
+    else:
+        crt=cart_crm.objects.get(id=cart_id) 
+
+    
+    crt.color= ele
+    print(idsr)
+    idata=sub_color.objects.get(id=idsr)
+    crt.sub_color_id=idata.id
+    crt.save()
+    return JsonResponse({"status":" not", "ids":crt.id})
+
+def cart_change_meterial(request):
+    ele = request.GET.get('ele')
+    cart_id = request.GET.get('cart_id')
+    prd_id = request.GET.get('prd_id')
+  
+    itm=item.objects.get(id=prd_id)
+    ids=request.GET.get('usrs')
+    usr=users.objects.get(id=ids)
+    if cart_id=="":
+        crt=cart_crm()
+        crt.user = usr
+        crt.item_id = itm.id
+        crt.model = None
+    else:
+        crt=cart_crm.objects.get(id=cart_id) 
+
+    
+    crt.meterial= ele
+    crt.save()
+    return JsonResponse({"status":" not", "ids":crt.id})
+
+
+def cart_change_model(request):
+    ele = request.GET.get('ele')
+    
+    model=sub_images.objects.get(id=ele)
+    cart_id = request.GET.get('cart_id')
+    prd_id = request.GET.get('prd_id')
+    itm=item.objects.get(id=prd_id)
+    ids=request.GET.get('usrs')
+    usr=users.objects.get(id=ids)
+    if cart_id=="":
+        crt=cart_crm()
+        crt.user = usr
+        crt.item_id = itm.id
+        crt.model_id = model.id
+    else:
+        crt=cart_crm.objects.get(id=cart_id) 
+
+    
+    crt.model_id = model.id
+    crt.save()
+    return JsonResponse({"status":" not", "ids":crt.id})
 ############################################################STAFF MODULE
 
 def staff_index(request):

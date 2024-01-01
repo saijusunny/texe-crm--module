@@ -1,13 +1,14 @@
 
 from django.db import models
 from datetime import datetime,date, timedelta
+# clientapp connection
 
-class OtherProjectModel(models.Model):
-    # Your fields go here
+from texeclientapp.models import *
 
-    class Meta:
-        app_label = 'texeclientapp'
-        db_table = 'orders'
+# work app connection 
+
+from texeworkapp.models import *
+
 
 class users(models.Model):
     regno= models.CharField(max_length=250, null=True, blank=True)
@@ -41,3 +42,34 @@ class complaint_service(models.Model):
     type= models.CharField(max_length=255,blank=True,null=True)
 
 
+
+class cart_crm(models.Model):
+    user = models.ForeignKey(users, on_delete=models.SET_NULL, null=True, blank=True)
+    item = models.ForeignKey(item, on_delete=models.SET_NULL, null=True, blank=True)
+    model = models.ForeignKey(sub_images, on_delete=models.SET_NULL, null=True, blank=True)
+    size= models.CharField(max_length=255,blank=True,null=True)
+    color= models.CharField(max_length=255,blank=True,null=True)
+    meterial= models.CharField(max_length=255,blank=True,null=True)
+    design= models.FileField(upload_to='images/cart/design',null=True, blank=True)
+    logo= models.FileField(upload_to='images/cart/logos',null=True, blank=True)
+    name= models.CharField(max_length=255,blank=True,null=True)
+    number= models.CharField(max_length=255,blank=True,null=True)
+    status= models.CharField(max_length=255,blank=True,null=True)
+    sub_color= models.ForeignKey(sub_color, on_delete=models.SET_NULL, null=True, blank=True)
+
+class orders_crm(models.Model):
+    regno= models.CharField(max_length=250, null=True, blank=True)
+    user = models.ForeignKey(users, on_delete=models.SET_NULL, null=True, blank=True)
+    status =models.CharField(max_length = 255,blank=True,null=True, default=0)
+    total_amount=models.FloatField(default=0,null=True, blank=True)
+    date=models.DateTimeField(null=True, blank=True)
+    stage_count=models.IntegerField(default=0,null=True, blank=True)
+
+class checkout_item_crm(models.Model):
+    orders = models.ForeignKey(orders_crm, on_delete=models.SET_NULL, null=True, blank=True)
+    item = models.ForeignKey(item, on_delete=models.SET_NULL, null=True, blank=True)
+    cart = models.ForeignKey(cart_crm, on_delete=models.SET_NULL, null=True, blank=True)
+
+    item_name= models.CharField(max_length=255,blank=True,null=True)
+    qty=models.IntegerField(null=True, blank=True)
+    item_price=models.FloatField(null=True, blank=True)

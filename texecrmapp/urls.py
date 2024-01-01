@@ -22,10 +22,17 @@ urlpatterns = [
     path('update',views.update, name='update'),
     path('remove',views.remove, name='remove'),
     path('get_date_event',views.get_date_event, name='get_date_event'),
-    path('view_items_orders',views.view_items_orders, name='view_items_orders'),
+    path('view_items_orders/<int:id>',views.view_items_orders, name='view_items_orders'),
 
     path('filter_date_event',views.filter_date_event, name='filter_date_event'),
     path('create_event',views.create_event, name='create_event'),
+    path('add_user_order/<int:id>',views.add_user_order, name='add_user_order'),
+    path('prouct_list',views.prouct_list, name='prouct_list'),
+
+    path('cart_cust_size',views.cart_cust_size, name='cart_cust_size'),
+    path('cart_change_color',views.cart_change_color, name='cart_change_color'),
+    path('cart_change_meterial',views.cart_change_meterial, name='cart_change_meterial'),
+    path('cart_change_model',views.cart_change_model, name='cart_change_model'),
     
     #########################################################################Staff Module
     path('staff_index',views.staff_index, name='staff_index'),
